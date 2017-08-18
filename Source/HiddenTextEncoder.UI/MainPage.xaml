@@ -10,11 +10,18 @@
 	<Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 		<StackPanel>
 			<TextBlock Text="Text" />
-			<TextBox Text="{x:Bind ViewModel.PlainText, Mode=TwoWay}" />
+			<TextBox Text="{Binding PlainText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+					TextWrapping="Wrap"
+					AcceptsReturn="True"
+					Height="200"/>
 			<TextBlock Text="Key" />
 			<TextBox Text="{x:Bind ViewModel.Key, Mode=TwoWay}" />
 			<TextBlock Text="Encoded Text" />
-			<TextBox Text="{x:Bind ViewModel.EncodedText, Mode=TwoWay}" SelectionHighlightColor="#FF0078D7" />
+			<TextBox x:Name="encodedTextBox" Text="{Binding EncodedText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+					SelectionHighlightColor="#FF0078D7" 
+					TextWrapping="Wrap"
+					AcceptsReturn="True"
+					Height="200"/>
 			<CheckBox IsChecked="{x:Bind ViewModel.UseEncryption, Mode=TwoWay}" Content="Encrypt" />
 			<Button Content="Copy to Clipboard" Command="{x:Bind ViewModel.CopyToClipboardCommand}" />
 		</StackPanel>

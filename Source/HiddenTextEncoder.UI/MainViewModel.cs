@@ -23,7 +23,7 @@ namespace HiddenTextEncoder.UI
 			var keyBytes = parameters.Key;
 
 			string keySetting;
-			if (settingsService.TryGetSetting(keySettingId, out keySetting))
+			if (settingsService.TryGetSetting(keySettingId, out keySetting) && !string.IsNullOrWhiteSpace(keySetting))
 			{
 				key = keySetting;
 			}

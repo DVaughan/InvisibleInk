@@ -1,4 +1,6 @@
-﻿using Windows.UI.Xaml.Controls;
+﻿using System;
+using System.ComponentModel;
+using Windows.UI.Xaml.Controls;
 using Codon;
 
 namespace HiddenTextEncoder.UI
@@ -10,10 +12,23 @@ namespace HiddenTextEncoder.UI
     {
         public MainPage()
         {
-	        ViewModel = Dependency.Resolve<MainViewModel>();
+			var vm = Dependency.Resolve<MainViewModel>();
+	        ViewModel = vm;
+			vm.PropertyChanged += HandleViewModelPropertyChanged;
+	        DataContext = vm;
+			
 
             this.InitializeComponent();
         }
+
+	    void HandleViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+	    {
+		    var propertyName = e.PropertyName;
+		    if (propertyName == nameof(MainViewModel.EncodedText))
+		    {
+				encodedTextBox.SelectAll();
+			}
+	    }
 
 	    public MainViewModel ViewModel { get; }
     }
