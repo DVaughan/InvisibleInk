@@ -1,9 +1,11 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
+using Windows.UI;
+using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 using Codon;
 
-namespace HiddenTextEncoder.UI
+namespace Outcoder.Cryptography.HiddenTextApp
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
@@ -17,16 +19,22 @@ namespace HiddenTextEncoder.UI
 			vm.PropertyChanged += HandleViewModelPropertyChanged;
 	        DataContext = vm;
 			
+            InitializeComponent();
 
-            this.InitializeComponent();
-        }
+	        encodedTextBox.SelectionHighlightColorWhenNotFocused = new SolidColorBrush(Colors.LawnGreen);
+	        encodedTextBox.SelectionHighlightColor = new SolidColorBrush(Colors.LawnGreen);
+		}
 
 	    void HandleViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
 	    {
 		    var propertyName = e.PropertyName;
-		    if (propertyName == nameof(MainViewModel.EncodedText))
+		    if (propertyName == nameof(MainViewModel.PlainText) 
+				|| propertyName == nameof(MainViewModel.UseEncryption))
 		    {
-				encodedTextBox.SelectAll();
+			    Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+			    {
+					encodedTextBox.SelectAll();
+				});
 			}
 	    }
 

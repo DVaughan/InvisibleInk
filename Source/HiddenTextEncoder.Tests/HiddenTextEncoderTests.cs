@@ -13,7 +13,7 @@ namespace Outcoder.Cryptography.Tests
 		public void ShouldEncodeAndDecode()
 		{
 			var hiddenTextEncoder = new HiddenTextEncoder();
-			string whiteSpaceCharacters = hiddenTextEncoder.GetAllSpaceCharacters();
+			string whiteSpaceCharacters = hiddenTextEncoder.GetAllSpaceCharactersAsString();
 			var stringGenerator = new StringGenerator();
 
 			for (int i = 0; i < 1000; i++)

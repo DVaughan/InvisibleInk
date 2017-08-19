@@ -1,48 +1,27 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-
-<Package
-  xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
-  xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
-  xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
-  IgnorableNamespaces="uap mp">
-
-  <Identity
-    Name="3c60ee32-90ce-4c79-a387-ba75e2491852"
-    Publisher="CN=Daniel"
-    Version="1.0.0.0" />
-
-  <mp:PhoneIdentity PhoneProductId="3c60ee32-90ce-4c79-a387-ba75e2491852" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
-
+<Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
+  <Identity Name="3c60ee32-90ce-4c79-a387-ba75e2491852" Publisher="CN=Daniel" Version="1.0.0.0" />
+  <mp:PhoneIdentity PhoneProductId="3c60ee32-90ce-4c79-a387-ba75e2491852" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>HiddenTextEncoder.UI</DisplayName>
     <PublisherDisplayName>Daniel</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
-
   <Dependencies>
     <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="10.0.0.0" />
   </Dependencies>
-
   <Resources>
-    <Resource Language="x-generate"/>
+    <Resource Language="x-generate" />
   </Resources>
-
   <Applications>
-    <Application Id="App"
-      Executable="$targetnametoken$.exe"
-      EntryPoint="HiddenTextEncoder.UI.App">
-      <uap:VisualElements
-        DisplayName="HiddenTextEncoder.UI"
-        Square150x150Logo="Assets\Square150x150Logo.png"
-        Square44x44Logo="Assets\Square44x44Logo.png"
-        Description="HiddenTextEncoder.UI"
-        BackgroundColor="transparent">
-        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
+    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="Outcoder.Cryptography.HiddenTextApp">
+      <uap:VisualElements DisplayName="Hidden Text Encoder" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="Hide text in plain sight with this hidden text encoder." BackgroundColor="transparent">
+        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png">
+        </uap:DefaultTile>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
     </Application>
   </Applications>
-
   <Capabilities>
     <Capability Name="internetClient" />
   </Capabilities>

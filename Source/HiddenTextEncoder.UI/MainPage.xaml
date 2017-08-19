@@ -1,29 +1,86 @@
 ﻿<Page
-	x:Class="HiddenTextEncoder.UI.MainPage"
+	x:Class="Outcoder.Cryptography.HiddenTextApp.MainPage"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	xmlns:local="using:HiddenTextEncoder.UI"
+	xmlns:local="using:Outcoder.Cryptography.HiddenTextApp"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	mc:Ignorable="d">
 
-	<Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-		<StackPanel>
-			<TextBlock Text="Text" />
-			<TextBox Text="{Binding PlainText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-					TextWrapping="Wrap"
-					AcceptsReturn="True"
-					Height="200"/>
-			<TextBlock Text="Key" />
-			<TextBox Text="{x:Bind ViewModel.Key, Mode=TwoWay}" />
-			<TextBlock Text="Encoded Text" />
-			<TextBox x:Name="encodedTextBox" Text="{Binding EncodedText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-					SelectionHighlightColor="#FF0078D7" 
-					TextWrapping="Wrap"
-					AcceptsReturn="True"
-					Height="200"/>
-			<CheckBox IsChecked="{x:Bind ViewModel.UseEncryption, Mode=TwoWay}" Content="Encrypt" />
-			<Button Content="Copy to Clipboard" Command="{x:Bind ViewModel.CopyToClipboardCommand}" />
+	<Page.Resources>
+		<Thickness x:Key="ListItemMargin">0,0,0,12</Thickness>
+		<Thickness x:Key="ButtonMargin">0,0,0,12</Thickness>
+	</Page.Resources>
+
+	<Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+		Margin="12">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="*" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="*" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+		</Grid.RowDefinitions>
+
+		<StackPanel Grid.Row="0" Margin="0,0,0,12">
+			<TextBlock Text="Place text in the Plain Text box. 
+It is encoded as spaces in the Encoded Text box. Paste text into 
+the Encoded Text box and it is converted back to plain text."
+					   TextWrapping="WrapWholeWords" />
 		</StackPanel>
+
+		<TextBox Header="Plain Text"
+				Text="{Binding PlainText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+				Margin="{StaticResource ListItemMargin}"
+				TextWrapping="Wrap"
+				AcceptsReturn="True"
+				ScrollViewer.VerticalScrollBarVisibility="Auto"
+				Grid.Row="1" />
+		<Button Command="{x:Bind ViewModel.CopyToClipboardCommand}"
+				CommandParameter="PlainText"
+				Margin="{StaticResource ButtonMargin}"
+				Grid.Row="2">
+			<SymbolIcon Symbol="Copy"/>
+		</Button>
+
+		<TextBox x:Name="encodedTextBox"
+				 Header="Encoded Text"
+				Text="{Binding EncodedText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+				Margin="{StaticResource ListItemMargin}"
+				TextWrapping="Wrap"
+				AcceptsReturn="True"
+				IsTextPredictionEnabled="False"
+				ScrollViewer.VerticalScrollBarVisibility="Auto"
+				Grid.Row="3" />
+
+		<Button Command="{x:Bind ViewModel.CopyToClipboardCommand}"
+				CommandParameter="EncodedText"
+				Margin="{StaticResource ButtonMargin}"
+				Grid.Row="4">
+			<SymbolIcon Symbol="Copy" />
+		</Button>
+
+		<Border BorderThickness="2" BorderBrush="Red" 
+				CornerRadius="0" Padding="12"
+				Grid.Row="5" Margin="0,24,0,0">
+			<StackPanel>
+				<CheckBox Content="Use Encryption"
+						IsChecked="{x:Bind ViewModel.UseEncryption, Mode=TwoWay}"
+						Margin="0" />
+				<TextBlock Text="Increases the length of the encoded string if enabled."
+						   TextWrapping="WrapWholeWords"
+							Margin="{StaticResource ListItemMargin}" />
+				<TextBox Header="Key"
+						Text="{x:Bind ViewModel.Key, Mode=TwoWay}"
+						Margin="{StaticResource ListItemMargin}" />
+				<Button Command="{x:Bind ViewModel.RefreshKeyCommand}"
+						Margin="{StaticResource ButtonMargin}">
+					<SymbolIcon Symbol="Refresh"/>
+				</Button>
+			</StackPanel>
+		</Border>
+
 	</Grid>
 </Page>
+

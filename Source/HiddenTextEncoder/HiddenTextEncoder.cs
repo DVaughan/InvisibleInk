@@ -42,14 +42,16 @@ namespace Outcoder.Cryptography
 			}
 		}
 
-		public string GetAllSpaceCharacters()
+		public string GetAllSpaceCharactersAsString()
 		{
 			return string.Join(string.Empty, characters);
 		}
 
+		public IEnumerable<char> SpaceCharacters => characters;
+
 		public string EncodeAsciiString(string text)
 		{
-			var asciiBytes = StringToAscii(text);
+			var asciiBytes = ConvertStringToAscii(text);
 			var encryptedBytes = new char[asciiBytes.Length * 2];
 			var encryptedByteCount = 0;
 
@@ -57,9 +59,9 @@ namespace Outcoder.Cryptography
 
 			for (var i = 0; i < stringLength; i++)
 			{
-				short b = asciiBytes[i];
-				var highPart = (short)(b / 16);
-				var lowPart = (short)(b % 16);
+				short asciiByte = asciiBytes[i];
+				var highPart = (short)(asciiByte / 16);
+				var lowPart = (short)(asciiByte % 16);
 
 				encryptedBytes[encryptedByteCount] = characters[highPart];
 				encryptedBytes[encryptedByteCount + 1] = characters[lowPart];
@@ -70,7 +72,7 @@ namespace Outcoder.Cryptography
 			return result;
 		}
 
-		static byte[] StringToAscii(string text)
+		static byte[] ConvertStringToAscii(string text)
 		{
 			byte[] result = new byte[text.Length];
 
@@ -99,20 +101,20 @@ namespace Outcoder.Cryptography
 			var arrayLength = 0;
 			for (var i = 0; i < spaceStringLength; i += 2)
 			{
-				var space1 = spaceString[i];
-				var space2 = spaceString[i + 1];
-				var index1 = characterLookup[space1];
-				var index2 = characterLookup[space2];
+				char space1 = spaceString[i];
+				char space2 = spaceString[i + 1];
+				short index1 = characterLookup[space1];
+				short index2 = characterLookup[space2];
 
-				var v1 = index1 * 16;
-				var v2 = index2;
+				int v1 = index1 * 16;
+				short v2 = index2;
 
 				var asciiByte = v1 + v2;
 				asciiBytes[arrayLength] = (byte)asciiByte;
 				arrayLength++;
 			}
 
-			var result = Encoding.UTF8.GetString(asciiBytes, 0, asciiBytes.Length);
+			var result = Encoding.ASCII.GetString(asciiBytes, 0, asciiBytes.Length);
 			return result;
 		}
 	}

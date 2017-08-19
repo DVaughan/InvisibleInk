@@ -51,10 +51,8 @@ namespace Outcoder.Cryptography
 				aes.Key = key;
 				aes.IV = iv;
 
-				// Create a decrytor to perform the stream transform.
 				ICryptoTransform encryptor = aes.CreateEncryptor(aes.Key, aes.IV);
 
-				// Create the streams used for encryption.
 				using (MemoryStream memoryStream = new MemoryStream())
 				{
 					using (CryptoStream cryptoStream = new CryptoStream(
@@ -62,7 +60,6 @@ namespace Outcoder.Cryptography
 					{
 						using (StreamWriter streamWriter = new StreamWriter(cryptoStream))
 						{
-							//Write all data to the stream.
 							streamWriter.Write(plainText);
 						}
 						encrypted = memoryStream.ToArray();
@@ -70,8 +67,6 @@ namespace Outcoder.Cryptography
 				}
 			}
 
-
-			// Return the encrypted bytes from the memory stream.
 			return encrypted;
 		}
 
@@ -94,25 +89,20 @@ namespace Outcoder.Cryptography
 
 			string result;
 
-			// Create an Aes object
-			// with the specified key and IV.
 			using (Aes aes = Aes.Create())
 			{
 				aes.Key = key;
 				aes.IV = iv;
 
-				// Create a decrytor to perform the stream transform.
 				ICryptoTransform decryptor = aes.CreateDecryptor(aes.Key, aes.IV);
 
-				// Create the streams used for decryption.
 				using (MemoryStream memoryStream = new MemoryStream(cipherText))
 				{
-					using (CryptoStream cryptoStream = new CryptoStream(memoryStream, decryptor, CryptoStreamMode.Read))
+					using (CryptoStream cryptoStream = new CryptoStream(
+								memoryStream, decryptor, CryptoStreamMode.Read))
 					{
 						using (StreamReader streamReader = new StreamReader(cryptoStream))
 						{
-							// Read the decrypted bytes from the decrypting stream
-							// and place them in a string.
 							result = streamReader.ReadToEnd();
 						}
 					}

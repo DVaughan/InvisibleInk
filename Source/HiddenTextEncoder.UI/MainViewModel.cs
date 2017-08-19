@@ -1,23 +1,29 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows.Input;
 using Windows.ApplicationModel.DataTransfer;
+
 using Codon.ComponentModel;
 using Codon.Services;
 using Codon.UIModel;
 using Codon.UIModel.Input;
-using Outcoder.Cryptography;
 
-namespace HiddenTextEncoder.UI
+namespace Outcoder.Cryptography.HiddenTextApp
 {
 	public class MainViewModel : ViewModelBase
 	{
-		AesEncryptor encryptor = new AesEncryptor();
-		Outcoder.Cryptography.HiddenTextEncoder encoder = new Outcoder.Cryptography.HiddenTextEncoder();
+		readonly ISettingsService settingsService;
+		readonly AesEncryptor encryptor = new AesEncryptor();
+		readonly HiddenTextEncoder encoder = new HiddenTextEncoder();
+
 		const string keySettingId = "AesKey";
+		const string firstKeyId = "AesKeyOriginal";
 			
 		public MainViewModel(ISettingsService settingsService)
 		{
+			this.settingsService = settingsService;
 			AesParameters parameters = encryptor.GenerateAesParameters();
 
 			var keyBytes = parameters.Key;
@@ -31,6 +37,7 @@ namespace HiddenTextEncoder.UI
 			{
 				key = Convert.ToBase64String(keyBytes);
 				settingsService.SetSetting(keySettingId, key);
+				settingsService.SetSetting(firstKeyId, key);
 			}
 			//iv = Convert.ToBase64String(parameters.IV);
 		}
@@ -42,7 +49,13 @@ namespace HiddenTextEncoder.UI
 		public string Key
 		{
 			get => key;
-			set => Set(ref key, value);
+			set
+			{
+				if (Set(ref key, value) == AssignmentResult.Success)
+				{
+					settingsService.SetSetting(keySettingId, key);
+				}
+			}
 		}
 
 		string plainText;
@@ -108,6 +121,42 @@ namespace HiddenTextEncoder.UI
 
 		string Decode(string encodedText)
 		{
+			var spaceCharacters = new List<char>(encoder.GetAllSpaceCharactersAsString());
+
+			var sb = new StringBuilder();
+
+			foreach (char c in spaceCharacters)
+			{
+				string encodedValue = "\\u" + ((int)c).ToString("x4");
+				sb.Append(encodedValue);
+			}
+
+			string regexString = "(?<spaces>[" + sb.ToString() + "]{4,})";
+			Regex regex = new Regex(regexString);
+
+			var matches = regex.Matches(encodedText);
+
+			sb.Clear();
+
+			foreach (Match match in matches)
+			{
+				string spaces = match.Groups["spaces"].Value;
+				try
+				{
+					string decodedSubstring = DecodeSubstring(spaces);
+					sb.AppendLine(decodedSubstring);
+				}
+				catch (Exception ex)
+				{
+					Console.WriteLine(ex);
+				}
+			}
+
+			return sb.ToString();
+		}
+
+		string DecodeSubstring(string encodedText)
+		{
 			string unencodedText = encoder.DecodeSpaceString(encodedText);
 
 			if (useEncryption == true)
@@ -128,20 +177,30 @@ namespace HiddenTextEncoder.UI
 			return unencodedText;
 		}
 
-		ActionCommand copyToClipboardCommand;
+		ActionCommand<string> copyToClipboardCommand;
 
-		public ICommand CopyToClipboardCommand => copyToClipboardCommand
-									?? (copyToClipboardCommand = new ActionCommand(CopyToClipboard));
+		public ActionCommand<string> CopyToClipboardCommand => copyToClipboardCommand
+					?? (copyToClipboardCommand = new ActionCommand<string>(CopyToClipboard));
 
-		void CopyToClipboard(object arg)
+		void CopyToClipboard(string arg)
 		{
-			if (encodedText == null)
+			string textToCopy;
+
+			if (arg == "EncodedText")
+			{
+				textToCopy = encodedText;
+			}
+			else if (arg == "PlainText")
+			{
+				textToCopy = plainText;
+			}
+			else
 			{
 				return;
 			}
 
 			var dataPackage = new DataPackage();
-			dataPackage.SetText(encodedText);
+			dataPackage.SetText(textToCopy);
 			Clipboard.SetContent(dataPackage);
 		}
 
@@ -150,7 +209,37 @@ namespace HiddenTextEncoder.UI
 		public bool? UseEncryption
 		{
 			get => useEncryption;
-			set => Set(ref useEncryption, value);
+			set
+			{
+				if (Set(ref useEncryption, value) == AssignmentResult.Success)
+				{
+					encodedText = Encode(plainText);
+					OnPropertyChanged(nameof(EncodedText));
+				}
+			}
+		}
+
+		ActionCommand refreshKeyCommand;
+
+		public ICommand RefreshKeyCommand => refreshKeyCommand
+					?? (refreshKeyCommand = new ActionCommand(RefreshKey));
+
+		void RefreshKey(object arg)
+		{
+			string originalKey;
+			if (settingsService.TryGetSetting(firstKeyId, out originalKey))
+			{
+				Key = originalKey;
+			}
+			else
+			{
+				/* Shouldn't get here unless something went awry with the settings. */
+				AesParameters parameters = encryptor.GenerateAesParameters();
+				var keyBytes = parameters.Key;
+
+				Key = Convert.ToBase64String(keyBytes);
+				settingsService.SetSetting(firstKeyId, key);
+			}
 		}
 
 	}
