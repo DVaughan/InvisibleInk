@@ -5,7 +5,7 @@ namespace Outcoder.Cryptography
 {
 	/*
 	 digram
-	 IsNullOrWhiteSpace return false if the space characters are unicode.
+	 IsNullOrWhiteSpace return false if the space characters are unicode. 
 	 */
 	 /// <summary>
 	 /// This class encodes and decodes text to, and from, text containing
