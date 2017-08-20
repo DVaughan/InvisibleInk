@@ -10,13 +10,13 @@ using Codon.Services;
 using Codon.UIModel;
 using Codon.UIModel.Input;
 
-namespace Outcoder.Cryptography.HiddenTextApp
+namespace Outcoder.Cryptography.InvisibleInkApp
 {
 	public class MainViewModel : ViewModelBase
 	{
 		readonly ISettingsService settingsService;
 		readonly AesEncryptor encryptor = new AesEncryptor();
-		readonly HiddenTextEncoder encoder = new HiddenTextEncoder();
+		readonly SpaceEncoder encoder = new SpaceEncoder();
 
 		const string keySettingId = "AesKey";
 		const string firstKeyId = "AesKeyOriginal";

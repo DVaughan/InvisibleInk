@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HiddenTextEncoder", "HiddenTextEncoder\HiddenTextEncoder.csproj", "{C629F25F-3084-4549-9B10-0466B069564A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InvisibleInk", "HiddenTextEncoder\InvisibleInk.csproj", "{C629F25F-3084-4549-9B10-0466B069564A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HiddenTextEncoder.Tests", "HiddenTextEncoder.Tests\HiddenTextEncoder.Tests.csproj", "{50422B0A-DA70-400F-8B01-ADBECBE2CD39}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InvisibleInk.Tests", "HiddenTextEncoder.Tests\InvisibleInk.Tests.csproj", "{50422B0A-DA70-400F-8B01-ADBECBE2CD39}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HiddenTextEncoder.UI", "HiddenTextEncoder.UI\HiddenTextEncoder.UI.csproj", "{92151D7A-C6F0-4810-BBF0-E7084BA13868}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InvisibleInk.UI", "HiddenTextEncoder.UI\InvisibleInk.UI.csproj", "{92151D7A-C6F0-4810-BBF0-E7084BA13868}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

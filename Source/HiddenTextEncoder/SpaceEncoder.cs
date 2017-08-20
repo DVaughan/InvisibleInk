@@ -7,7 +7,11 @@ namespace Outcoder.Cryptography
 	 digram
 	 IsNullOrWhiteSpace return false if the space characters are unicode.
 	 */
-	public class HiddenTextEncoder
+	 /// <summary>
+	 /// This class encodes and decodes text to, and from, text containing
+	 /// only unicode space characters. 
+	 /// </summary>
+	public class SpaceEncoder
 	{
 		readonly char[] characters =
 		{
@@ -31,24 +35,36 @@ namespace Outcoder.Cryptography
 			'\u3000' /* Ideographic Space */
 		};
 
-		readonly Dictionary<char, short> characterLookup
+		readonly Dictionary<char, short> characterIndexDictionary
 			= new Dictionary<char, short>();
 
-		public HiddenTextEncoder()
+		public SpaceEncoder()
 		{
 			for (short i = 0; i < characters.Length; i++)
 			{
-				characterLookup[characters[i]] = i;
+				characterIndexDictionary[characters[i]] = i;
 			}
 		}
 
+		/// <summary>
+		/// Retrieves all the space characters as a <c>string</c>.
+		/// </summary>
+		/// <returns>The space characters as a <c>string</c>.</returns>
 		public string GetAllSpaceCharactersAsString()
 		{
 			return string.Join(string.Empty, characters);
 		}
 
+		/// <summary>
+		/// Retrieves the list of space characters.
+		/// </summary>
 		public IEnumerable<char> SpaceCharacters => characters;
 
+		/// <summary>
+		/// Converts the specified text into a space encoded string.
+		/// </summary>
+		/// <param name="text">The text to encode.</param>
+		/// <returns>The space encoded string.</returns>
 		public string EncodeAsciiString(string text)
 		{
 			var asciiBytes = ConvertStringToAscii(text);
@@ -74,9 +90,10 @@ namespace Outcoder.Cryptography
 
 		static byte[] ConvertStringToAscii(string text)
 		{
-			byte[] result = new byte[text.Length];
+			int length = text.Length;
+			byte[] result = new byte[length];
 
-			for (var ix = 0; ix < text.Length; ++ix)
+			for (var ix = 0; ix < length; ++ix)
 			{
 				char c = text[ix];
 				if (c <= 0x7f)
@@ -92,6 +109,11 @@ namespace Outcoder.Cryptography
 			return result;
 		}
 
+		/// <summary>
+		/// Unencodes the specified space encoded string.
+		/// </summary>
+		/// <param name="spaceString">The string to convert back.</param>
+		/// <returns>The original text before it was encoded.</returns>
 		public string DecodeSpaceString(string spaceString)
 		{
 			var spaceStringLength = spaceString.Length;
@@ -103,13 +125,13 @@ namespace Outcoder.Cryptography
 			{
 				char space1 = spaceString[i];
 				char space2 = spaceString[i + 1];
-				short index1 = characterLookup[space1];
-				short index2 = characterLookup[space2];
+				short index1 = characterIndexDictionary[space1];
+				short index2 = characterIndexDictionary[space2];
 
-				int v1 = index1 * 16;
-				short v2 = index2;
+				int highPart = index1 * 16;
+				short lowPart = index2;
 
-				var asciiByte = v1 + v2;
+				var asciiByte = highPart + lowPart;
 				asciiBytes[arrayLength] = (byte)asciiByte;
 				arrayLength++;
 			}

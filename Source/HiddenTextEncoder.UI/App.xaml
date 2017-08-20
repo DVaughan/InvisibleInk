@@ -1,8 +1,8 @@
 ﻿<Application
-    x:Class="Outcoder.Cryptography.HiddenTextApp.App"
+    x:Class="Outcoder.Cryptography.InvisibleInkApp.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Outcoder.Cryptography.HiddenTextApp"
+    xmlns:local="using:Outcoder.Cryptography.InvisibleInkApp"
     RequestedTheme="Light">
 
 </Application>

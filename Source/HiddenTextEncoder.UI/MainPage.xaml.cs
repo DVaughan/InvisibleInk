@@ -5,7 +5,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Codon;
 
-namespace Outcoder.Cryptography.HiddenTextApp
+namespace Outcoder.Cryptography.InvisibleInkApp
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
@@ -21,8 +21,8 @@ namespace Outcoder.Cryptography.HiddenTextApp
 			
             InitializeComponent();
 
-	        encodedTextBox.SelectionHighlightColorWhenNotFocused = new SolidColorBrush(Colors.LawnGreen);
-	        encodedTextBox.SelectionHighlightColor = new SolidColorBrush(Colors.LawnGreen);
+	        encodedTextBox.SelectionHighlightColorWhenNotFocused = new SolidColorBrush(Colors.PowderBlue);
+	        encodedTextBox.SelectionHighlightColor = new SolidColorBrush(Colors.PowderBlue);
 		}
 
 	    void HandleViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)

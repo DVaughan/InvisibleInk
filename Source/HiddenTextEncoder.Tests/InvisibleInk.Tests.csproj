@@ -55,7 +55,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HiddenTextEncoderTests.cs" />
+    <Compile Include="SpaceEncoderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StringGenerator.cs" />
     <Compile Include="AesEncryptorTests.cs" />
@@ -65,9 +65,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\HiddenTextEncoder\HiddenTextEncoder.csproj">
+    <ProjectReference Include="..\HiddenTextEncoder\InvisibleInk.csproj">
       <Project>{c629f25f-3084-4549-9b10-0466b069564a}</Project>
-      <Name>HiddenTextEncoder</Name>
+      <Name>InvisibleInk</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

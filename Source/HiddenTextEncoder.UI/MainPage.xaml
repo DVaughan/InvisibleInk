@@ -1,8 +1,8 @@
 ﻿<Page
-	x:Class="Outcoder.Cryptography.HiddenTextApp.MainPage"
+	x:Class="Outcoder.Cryptography.InvisibleInkApp.MainPage"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	xmlns:local="using:Outcoder.Cryptography.HiddenTextApp"
+	xmlns:local="using:Outcoder.Cryptography.InvisibleInkApp"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	mc:Ignorable="d">
@@ -24,9 +24,9 @@
 		</Grid.RowDefinitions>
 
 		<StackPanel Grid.Row="0" Margin="0,0,0,12">
-			<TextBlock Text="Place text in the Plain Text box. 
-It is encoded as spaces in the Encoded Text box. Paste text into 
-the Encoded Text box and it is converted back to plain text."
+			<TextBlock Text="Place text in the 'Plain Text' box. 
+It is encoded as spaces in the 'Encoded Text' box. 
+Paste text into the 'Encoded Text' box and it is converted back to plain text."
 					   TextWrapping="WrapWholeWords" />
 		</StackPanel>
 
@@ -61,7 +61,7 @@ the Encoded Text box and it is converted back to plain text."
 			<SymbolIcon Symbol="Copy" />
 		</Button>
 
-		<Border BorderThickness="2" BorderBrush="Red" 
+		<Border BorderThickness="2" BorderBrush="Gray" 
 				CornerRadius="0" Padding="12"
 				Grid.Row="5" Margin="0,24,0,0">
 			<StackPanel>

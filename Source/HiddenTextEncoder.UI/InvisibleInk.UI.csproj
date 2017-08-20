@@ -7,8 +7,8 @@
     <ProjectGuid>{92151D7A-C6F0-4810-BBF0-E7084BA13868}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>HiddenTextEncoder.UI</RootNamespace>
-    <AssemblyName>HiddenTextEncoder.UI</AssemblyName>
+    <RootNamespace>InvisibleInk.UI</RootNamespace>
+    <AssemblyName>InvisibleInk.UI</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.15063.0</TargetPlatformVersion>
@@ -136,9 +136,9 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\HiddenTextEncoder\HiddenTextEncoder.csproj">
+    <ProjectReference Include="..\HiddenTextEncoder\InvisibleInk.csproj">
       <Project>{c629f25f-3084-4549-9b10-0466b069564a}</Project>
-      <Name>HiddenTextEncoder</Name>
+      <Name>InvisibleInk</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

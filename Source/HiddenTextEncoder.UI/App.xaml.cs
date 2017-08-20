@@ -5,7 +5,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
-namespace Outcoder.Cryptography.HiddenTextApp
+namespace Outcoder.Cryptography.InvisibleInkApp
 {
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
