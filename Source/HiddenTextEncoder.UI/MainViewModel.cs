@@ -95,6 +95,7 @@ namespace Outcoder.Cryptography.InvisibleInkApp
 					byte[] encryptedBytes = encryptor.EncryptString(text, GetBytes(key), ivBytes);
 
 					byte[] allBytes = new byte[ivBytes.Length + encryptedBytes.Length + 2];
+
 					int ivLength = ivBytes.Length;
 					/* The first two bytes store the length of the IV. */
 					allBytes[0] = (byte)ivLength;
