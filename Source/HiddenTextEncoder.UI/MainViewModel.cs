@@ -20,7 +20,7 @@ namespace Outcoder.Cryptography.InvisibleInkApp
 
 		const string keySettingId = "AesKey";
 		const string firstKeyId = "AesKeyOriginal";
-			
+		
 		public MainViewModel(ISettingsService settingsService)
 		{
 			this.settingsService = settingsService;
@@ -39,10 +39,7 @@ namespace Outcoder.Cryptography.InvisibleInkApp
 				settingsService.SetSetting(keySettingId, key);
 				settingsService.SetSetting(firstKeyId, key);
 			}
-			//iv = Convert.ToBase64String(parameters.IV);
 		}
-
-		string iv = "OolP/1dvx0OqrOc91mBE0Q==";
 
 		string key;
 
@@ -80,14 +77,30 @@ namespace Outcoder.Cryptography.InvisibleInkApp
 
 		string Encode(string text)
 		{
+			if (string.IsNullOrEmpty(text))
+			{
+				return string.Empty;
+			}
+
 			string textTemp;
 
 			if (useEncryption == true)
 			{
 				try
 				{
-					byte[] bytes = encryptor.EncryptString(text, GetBytes(key), GetBytes(iv));
-					textTemp = Convert.ToBase64String(bytes);
+					byte[] ivBytes = encryptor.GenerateAesParameters().IV;
+					byte[] encryptedBytes = encryptor.EncryptString(text, GetBytes(key), ivBytes);
+
+					byte[] allBytes = new byte[ivBytes.Length + encryptedBytes.Length + 2];
+					int ivLength = ivBytes.Length;
+					/* The first two bytes store the length of the IV. */
+					allBytes[0] = (byte)ivLength;
+					allBytes[1] = (byte)(ivLength >> 8);
+
+					Array.Copy(ivBytes, 0, allBytes, 2, ivLength);
+					Array.Copy(encryptedBytes, 0, allBytes, ivLength + 2, encryptedBytes.Length);
+
+					textTemp = Convert.ToBase64String(allBytes);
 				}
 				catch (Exception ex)
 				{
@@ -157,14 +170,28 @@ namespace Outcoder.Cryptography.InvisibleInkApp
 
 		string DecodeSubstring(string encodedText)
 		{
+			if (string.IsNullOrEmpty(encodedText))
+			{
+				return string.Empty;
+			}
+
 			string unencodedText = encoder.DecodeSpaceString(encodedText);
 
 			if (useEncryption == true)
 			{
 				try
 				{
-					byte[] bytes = Convert.FromBase64String(unencodedText);
-					string text = encryptor.DecryptBytes(bytes, GetBytes(key), GetBytes(iv));
+					byte[] allBytes = Convert.FromBase64String(unencodedText);
+					int ivLength = allBytes[0] + allBytes[1];
+
+					byte[] ivBytes = new byte[ivLength];
+					Array.Copy(allBytes, 2, ivBytes, 0, ivLength);
+
+					int encryptedBytesLength = allBytes.Length - (ivLength + 2);
+					byte[] encryptedBytes = new byte[encryptedBytesLength];
+					Array.Copy(allBytes, ivLength + 2, encryptedBytes, 0, encryptedBytesLength);
+
+					string text = encryptor.DecryptBytes(encryptedBytes, GetBytes(key), ivBytes);
 					return text;
 				}
 				catch (Exception ex)

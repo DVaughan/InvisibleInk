@@ -67,17 +67,17 @@ namespace Outcoder.Cryptography
 		/// <returns>The space encoded string.</returns>
 		public string EncodeAsciiString(string text)
 		{
-			var asciiBytes = ConvertStringToAscii(text);
-			var encryptedBytes = new char[asciiBytes.Length * 2];
-			var encryptedByteCount = 0;
+			byte[] asciiBytes = ConvertStringToAscii(text);
+			char[] encryptedBytes = new char[asciiBytes.Length * 2];
+			int encryptedByteCount = 0;
 
-			var stringLength = asciiBytes.Length;
+			int stringLength = asciiBytes.Length;
 
 			for (var i = 0; i < stringLength; i++)
 			{
 				short asciiByte = asciiBytes[i];
-				var highPart = (short)(asciiByte / 16);
-				var lowPart = (short)(asciiByte % 16);
+				short highPart = (short)(asciiByte / 16);
+				short lowPart = (short)(asciiByte % 16);
 
 				encryptedBytes[encryptedByteCount] = characters[highPart];
 				encryptedBytes[encryptedByteCount + 1] = characters[lowPart];
@@ -116,12 +116,13 @@ namespace Outcoder.Cryptography
 		/// <returns>The original text before it was encoded.</returns>
 		public string DecodeSpaceString(string spaceString)
 		{
-			var spaceStringLength = spaceString.Length;
+			int spaceStringLength = spaceString.Length;
 
-			var asciiBytes = new byte[spaceStringLength / 2];
+			byte[] asciiBytes = new byte[spaceStringLength / 2];
 
-			var arrayLength = 0;
-			for (var i = 0; i < spaceStringLength; i += 2)
+			int arrayLength = 0;
+
+			for (int i = 0; i < spaceStringLength; i += 2)
 			{
 				char space1 = spaceString[i];
 				char space2 = spaceString[i + 1];
@@ -131,12 +132,12 @@ namespace Outcoder.Cryptography
 				int highPart = index1 * 16;
 				short lowPart = index2;
 
-				var asciiByte = highPart + lowPart;
+				int asciiByte = highPart + lowPart;
 				asciiBytes[arrayLength] = (byte)asciiByte;
 				arrayLength++;
 			}
 
-			var result = Encoding.ASCII.GetString(asciiBytes, 0, asciiBytes.Length);
+			string result = Encoding.ASCII.GetString(asciiBytes, 0, asciiBytes.Length);
 			return result;
 		}
 	}
