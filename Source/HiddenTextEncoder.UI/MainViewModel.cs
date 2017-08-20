@@ -4,8 +4,9 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Input;
 using Windows.ApplicationModel.DataTransfer;
-
+using Codon;
 using Codon.ComponentModel;
+using Codon.Logging;
 using Codon.Services;
 using Codon.UIModel;
 using Codon.UIModel.Input;
@@ -15,26 +16,28 @@ namespace Outcoder.Cryptography.InvisibleInkApp
 	public class MainViewModel : ViewModelBase
 	{
 		readonly ISettingsService settingsService;
+		readonly ILog log;
 		readonly AesEncryptor encryptor = new AesEncryptor();
 		readonly SpaceEncoder encoder = new SpaceEncoder();
 
 		const string keySettingId = "AesKey";
 		const string firstKeyId = "AesKeyOriginal";
 		
-		public MainViewModel(ISettingsService settingsService)
+		public MainViewModel(ISettingsService settingsService, ILog log)
 		{
-			this.settingsService = settingsService;
-			AesParameters parameters = encryptor.GenerateAesParameters();
-
-			var keyBytes = parameters.Key;
+			this.settingsService = settingsService ?? throw new ArgumentNullException(nameof(settingsService));
+			this.log = log ?? throw new ArgumentNullException(nameof(log));
 
 			string keySetting;
-			if (settingsService.TryGetSetting(keySettingId, out keySetting) && !string.IsNullOrWhiteSpace(keySetting))
+			if (settingsService.TryGetSetting(keySettingId, out keySetting) 
+					&& !string.IsNullOrWhiteSpace(keySetting))
 			{
 				key = keySetting;
 			}
 			else
 			{
+				AesParameters parameters = encryptor.GenerateAesParameters();
+				var keyBytes = parameters.Key;
 				key = Convert.ToBase64String(keyBytes);
 				settingsService.SetSetting(keySettingId, key);
 				settingsService.SetSetting(firstKeyId, key);
@@ -104,7 +107,7 @@ namespace Outcoder.Cryptography.InvisibleInkApp
 				}
 				catch (Exception ex)
 				{
-					Console.WriteLine(ex);
+					log.Debug("Encoding failed.", ex);
 					return string.Empty;
 				}
 			}
@@ -134,7 +137,7 @@ namespace Outcoder.Cryptography.InvisibleInkApp
 
 		string Decode(string encodedText)
 		{
-			var spaceCharacters = new List<char>(encoder.GetAllSpaceCharactersAsString());
+			var spaceCharacters = encoder.SpaceCharacters;
 
 			var sb = new StringBuilder();
 
@@ -161,7 +164,7 @@ namespace Outcoder.Cryptography.InvisibleInkApp
 				}
 				catch (Exception ex)
 				{
-					Console.WriteLine(ex);
+					log.Debug("Failed to decode substring.", ex);
 				}
 			}
 
@@ -196,7 +199,7 @@ namespace Outcoder.Cryptography.InvisibleInkApp
 				}
 				catch (Exception ex)
 				{
-					Console.WriteLine(ex);
+					log.Debug("Failed to decrypt bytes.", ex);
 					return string.Empty;
 				}
 			}
