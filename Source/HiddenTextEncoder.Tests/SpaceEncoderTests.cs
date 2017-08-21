@@ -31,7 +31,7 @@ namespace Outcoder.Cryptography.Tests
 
 				var unencoded = encoder.DecodeSpaceString(encoded);
 				Assert.AreEqual(s, unencoded);
-			}
+			} 
 
 			//string encoded = encoder.EncodeAsciiString("Make this hidden");
 			//string original = encoder.DecodeSpaceString(encoded);
