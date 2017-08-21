@@ -21,8 +21,8 @@ namespace Outcoder.Cryptography.InvisibleInkApp
 			
             InitializeComponent();
 
-	        encodedTextBox.SelectionHighlightColorWhenNotFocused = new SolidColorBrush(Colors.PowderBlue);
-	        encodedTextBox.SelectionHighlightColor = new SolidColorBrush(Colors.PowderBlue);
+	        encodedTextBox.SelectionHighlightColorWhenNotFocused = new SolidColorBrush(Colors.DarkGray);
+	        encodedTextBox.SelectionHighlightColor = new SolidColorBrush(Colors.DarkGray);
 		}
 
 	    void HandleViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)

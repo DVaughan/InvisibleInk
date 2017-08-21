@@ -23,7 +23,7 @@
 			<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
 
-		<StackPanel Grid.Row="0" Margin="0,0,0,12">
+		<StackPanel Grid.Row="0" Margin="{StaticResource ListItemMargin}">
 			<TextBlock Text="Place text in the 'Plain Text' box. 
 It is encoded as spaces in the 'Encoded Text' box. 
 Paste text into the 'Encoded Text' box and it is converted back to plain text."

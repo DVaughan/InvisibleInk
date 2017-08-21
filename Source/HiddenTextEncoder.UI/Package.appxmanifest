@@ -14,9 +14,9 @@
     <Resource Language="x-generate" />
   </Resources>
   <Applications>
-    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="Outcoder.Cryptography.HiddenTextApp">
+    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="Outcoder.Cryptography.InvisibleInkApp.App">
       <uap:VisualElements DisplayName="Invisible Ink" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="Hide text in plain sight with this hidden text encoder." BackgroundColor="transparent">
-        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png">
+        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" ShortName="Invisible Ink">
         </uap:DefaultTile>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
