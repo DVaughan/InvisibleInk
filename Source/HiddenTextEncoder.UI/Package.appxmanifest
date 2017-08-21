@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="3c60ee32-90ce-4c79-a387-ba75e2491852" Publisher="CN=Daniel" Version="1.0.0.0" />
-  <mp:PhoneIdentity PhoneProductId="3c60ee32-90ce-4c79-a387-ba75e2491852" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
+  <Identity Name="51242Outcoder.InvisibleInk" Publisher="CN=2C8A1BC8-7AA2-49B3-8F00-FC71CF666D20" Version="1.1.0.0" />
+  <mp:PhoneIdentity PhoneProductId="a87e83ae-98cb-45f3-a8e7-3711af02df9b" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
-    <DisplayName>HiddenTextEncoder.UI</DisplayName>
-    <PublisherDisplayName>Daniel</PublisherDisplayName>
+    <DisplayName>Invisible Ink</DisplayName>
+    <PublisherDisplayName>Outcoder</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
   <Dependencies>

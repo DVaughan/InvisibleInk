@@ -13,6 +13,7 @@ namespace Outcoder.Cryptography.Tests
 		public void ShouldEncodeAndDecode()
 		{
 			var encoder = new SpaceEncoder();
+
 			string whiteSpaceCharacters = encoder.GetAllSpaceCharactersAsString();
 			var stringGenerator = new StringGenerator();
 
@@ -31,6 +32,9 @@ namespace Outcoder.Cryptography.Tests
 				var unencoded = encoder.DecodeSpaceString(encoded);
 				Assert.AreEqual(s, unencoded);
 			}
+
+			//string encoded = encoder.EncodeAsciiString("Make this hidden");
+			//string original = encoder.DecodeSpaceString(encoded);
 		}
 	}
 }
