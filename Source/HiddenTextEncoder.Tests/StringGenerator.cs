@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Linq;
 
 namespace Outcoder.Cryptography.Tests
@@ -7,12 +6,12 @@ namespace Outcoder.Cryptography.Tests
 	class StringGenerator
 	{
 		readonly Random random = new Random();
+		readonly string asciiCharacters
+			= new string(Enumerable.Range(0, 255).Select(x => (char)x).ToArray());
 
 		public string CreateRandomString(int length)
 		{
-			/* From https://stackoverflow.com/questions/1344221/how-can-i-generate-random-alphanumeric-strings-in-c */
-			const string chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 ";
-			return new string(Enumerable.Repeat(chars, length)
+			return new string(Enumerable.Repeat(asciiCharacters, length)
 				.Select(s => s[random.Next(s.Length)]).ToArray());
 		}
 	}

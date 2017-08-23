@@ -3,16 +3,14 @@ using System.Text;
 
 namespace Outcoder.Cryptography
 {
-	/*
-	 digram
-	 IsNullOrWhiteSpace return false if the space characters are unicode. 
-	 */
 	 /// <summary>
 	 /// This class encodes and decodes text to, and from, text containing
 	 /// only unicode space characters. 
 	 /// </summary>
 	public class SpaceEncoder
 	{
+		readonly Encoding asciiEncoding = Encoding.GetEncoding("iso-8859-1");
+
 		readonly char[] characters =
 		{
 			'\u0020', /* Space */
@@ -96,7 +94,7 @@ namespace Outcoder.Cryptography
 			for (var ix = 0; ix < length; ++ix)
 			{
 				char c = text[ix];
-				if (c <= 0x7f)
+				if (c <= 0xFF)
 				{
 					result[ix] = (byte)c;
 				}
@@ -137,7 +135,7 @@ namespace Outcoder.Cryptography
 				arrayLength++;
 			}
 
-			string result = Encoding.ASCII.GetString(asciiBytes, 0, asciiBytes.Length);
+			string result = asciiEncoding.GetString(asciiBytes, 0, asciiBytes.Length);
 			return result;
 		}
 	}
